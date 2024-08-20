@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        /* header */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: var(--body-color);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        :root {
+            --body-color: #dde1e7;
+            --nav-color: #dde1e7;
+            --side-nav: #dde1e7;
+            --text-color: #595959;
+            --header: #2C3E50;
+            --search-bar: #595959;
+            --search-text: #595959;
+            --hover-txt-color: #1A73E8;
+            --box-shadow: -3px -3px 7px #ffffff73,
+                2px 2px 5px rgba(94, 101, 121, 0.288);
+            --box-inset-shadow: inset 2px 2px 5px #babecc,
+                inset -5px -5px 10px #ffffff73;
+            --transparent-color: rgba(221, 225, 231, 0.8);
+
+            /* Site Max-Width */
+            --site-max-width: 1350px;
+        }
+
+        body.dark {
+            --body-color: #121212;
+            --nav-color: #1f1f1f;
+            --side-nav: #1a1a1a;
+            --text-color: #e0e0e0;
+            --header: #ffffff;
+            --hover-txt-color: #bb86fc;
+            --box-shadow: 0px 4px 6px rgba(56, 49, 49, 0.4),
+                0px -4px 6px rgba(56, 49, 49, 0.4),
+                4px 0px 6px rgba(56, 49, 49, 0.4),
+                -4px 0px 6px rgba(56, 49, 49, 0.4);
+            --box-inset-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.4),
+                inset 0px -2px 4px rgba(0, 0, 0, 0.4),
+                inset 2px 0px 4px rgba(0, 0, 0, 0.4),
+                inset -2px 0px 4px rgba(0, 0, 0, 0.4);
+            --transparent-color: rgba(26, 26, 26, 0.9);
+        }
+
+
+        /* arrow top  */
+
+        .arrowTop {
+            position: fixed;
+            right: 30px;
+            bottom: -100%;
+            border: none;
+            border-radius: 18%;
+            transition: 0.2s ease;
+            z-index: 9999;
+        }
+
+        .arrowTop.show {
+            bottom: 100px;
+        }
+
+        .slideUp {
+            font-size: 40px;
+            color: var(--text-color);
+            border: none;
+            border-radius: 50%;
+            background-color: var(--body-color);
+            box-shadow: var(--box-shadow);
+
+        }
+
+        .slideUp:hover {
+            color: var(--hover-txt-color);
+            box-shadow: var(--box-inset-shadow);
+        }
+
+
+
+        .header-main a {
+            text-decoration: none;
+            background-color: var(--nav-color);
+        }
+
+        .header-main {
+            list-style: none;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+            background: var(--nav-color);
+            border: none;
+            box-shadow: var(--box-shadow);
+            transition: 0.3s ease;
+        }
+
+        header.hide {
+            transform: translatey(-100%);
+        }
+
+        nav .nav-logo a {
+            color: var(--header);
+            background-color: var(--nav-color);
+            font-weight: 700;
+            font-size: 31px;
+            padding: 5px 0;
+        }
+
+        /* nav .nav-logo h1 {
+ 
+  } */
+
+        nav {
+            display: flex;
+            padding: 10px 0;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+            background-color: var(--nav-color);
+            max-width: var(--site-max-width);
+        }
+
+        nav .header-main {
+            display: flex;
+            background-color: var(--nav-color);
+            gap: 15px;
+            margin-bottom: -2px;
+        }
+
+        nav .header-main>li>a {
+            display: block;
+            padding: 10px 10px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--header);
+            background-color: var(--nav-color);
+            transition: all 0.2s ease;
+        }
+
+        nav .header-main li a:hover {
+            color: var(--hover-txt-color);
+            border-radius: 5px;
+            background: var(--body-color);
+            box-shadow: var(--box-shadow);
+
+        }
+
+        nav .header-main li a:focus {
+            color: var(--hover-txt-color);
+            border-radius: 5px;
+            background: var(--body-color);
+            box-shadow: var(--box-inset-shadow);
+
+        }
+
+        /* minimixe maximize nav bar button */
+
+
+        .searchBox i {
+            display: none;
+        }
+
+        @media screen and (max-width: 1485px) {
+            nav {
+                display: flex;
+                padding: 10px 0;
+                justify-content: space-around;
+                align-items: center;
+                margin: 0 auto;
+                background-color: var(--nav-color);
+                max-width: var(--site-max-width);
+            }
+        }
+
+
+
+
+        @media screen and (max-width: 1024px) {
+            nav {
+                padding: 15px 20px;
+                justify-content: space-between;
+            }
+
+
+            nav .header-main {
+                margin-bottom: 10px;
+                display: block;
+                position: absolute;
+                top: 76px;
+                left: -100%;
+                overflow-y: auto;
+                width: 35%;
+                height: 100vh;
+                text-align: center;
+                transition: all 0.10s ease;
+                border: none;
+                background: transparent;
+                background-color: var(--transparent-color);
+                box-shadow: var(--box-shadow);
+            }
+
+            nav.active .header-main {
+                left: 0;
+            }
+
+            .searchBox {
+                display: flex;
+                font-size: 25px;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--nav-color);
+            }
+
+            .searchBox i {
+                display: block;
+                padding-right: 25px;
+                position: absolute;
+                top: 19px;
+                font-size: 30px;
+                color: var(--header);
+                cursor: pointer;
+                background-color: var(--nav-color);
+            }
+
+            .searchBox i.close {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .searchBox.active i.close {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .searchBox.active i.open {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+
+            nav .header-main li {
+                display: block;
+                border-radius: 20px;
+                width: 100%;
+                margin: 15px 10px 0px -10px;
+            }
+
+            nav .header-main li a {
+                color: var(--header);
+                border: none;
+                border-radius: 10px;
+                box-shadow: var(--box-shadow);
+            }
+
+            nav .header-main li a:focus {
+                color: var(--header);
+                border: none;
+                border-radius: 10px;
+                box-shadow: var(--box-inset-shadow);
+            }
+
+            .darkLight-searchBox .dark-light {
+                display: flex;
+                position: absolute;
+                right: 35px;
+            }
+
+        }
+
+        @media screen and (max-width: 500px) {
+            nav .nav_logo a img {
+                max-width: 45px;
+            }
+
+            nav .nav_logo h2 {
+                font-size: 20px;
+            }
+
+            .button {
+                padding: 10px 20px !important;
+                font-size: 15px !important;
+            }
+
+            nav .header-main {
+                display: block;
+                position: absolute;
+                top: 76px;
+                left: -100%;
+                overflow-y: auto;
+                width: 55%;
+                height: 100vh;
+                text-align: center;
+                transition: all 0.10s ease;
+                border: none;
+                background: transparent;
+                background-color: var(--transparent-color);
+                box-shadow: var(--box-shadow);
+            }
+
+            nav .header-main a {
+                width: 100%;
+            }
+
+            /* mode */
+            .darkLight-searchBox .dark-light {
+                display: flex;
+                position: absolute;
+                right: 35px;
+            }
+
+
+        }
+
+        /* dark and light mode */
+        .darkLight-searchBox {
+            display: flex;
+            position: absolute;
+            right: 20px;
+            top: 16px;
+            background-color: var(--nav-color);
+        }
+
+        .darkLight-searchBox .dark-light,
+        .darkLight-searchBox .searchtoggle {
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            background-color: var(--nav-color);
+        }
+
+        .dark-light i,
+        .searchtoggle i {
+            position: absolute;
+            color: var(--header);
+            font-size: 22px;
+            cursor: pointer;
+            background-color: var(--nav-color);
+            transition: all 0.3s ease;
+        }
+
+        /* sun */
+        .dark-light i.sun {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .dark-light.active i.sun {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .dark-light.active i.moon {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* header close */
+
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            background-color: #dde1e7;
+            border: none;
+            padding-top: 70px;
+
+        }
+
+        .dropdown {
+
+            width: 50%;
+            height: 35px;
+            padding: 2px 5px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            background-color: #dde1e7;
+            box-shadow: -3px -3px 7px #ffffff73,
+                2px 2px 5px rgba(94, 104, 121, 0.288);
+        }
+
+        .dropdown:focus {
+            color: #3498db;
+            box-shadow: inset 2px 2px 5px #babecc,
+                -5px -5px 10px #ffffff73;
+        }
+
+
+        h3 {
+
+            margin-top: 30px;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .division {
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            margin: 40px auto;
+            background: #dde1e7;
+            box-shadow: -3px -3px 7px #ffffff73,
+                2px 2px 5px rgba(94, 104, 121, 0.288);
+        }
+
+        .division h3 {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-logo">
+                <a style="text-decoration: none;" href="index.html">
+                    RKPY
+                </a>
+            </div>
+            <div class="searchBox">
+                <i class='bx bx-menu open'></i>
+                <i class='bx bx-x close'></i>
+            </div>
+            <ul class="header-main">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="payment.html">Payment</a></li>
+                <li><a href="units.html">Units</a></li>
+                <li><a href="https://www.ramkrishna4234.com.np/">Login</a></li>
+            </ul>
+
+        </nav>
+        <!-- light and dark mode -->
+        <div class="darkLight-searchBox">
+            <div class="dark-light">
+                <i class='bx bx-moon moon'></i>
+                <i class='bx bx-sun sun'></i>
+            </div>
+        </div>
+
+
+    </header>
+
+    <!-- Arrow Top -->
+    <div class="arrowTop">
+        <a href="#">
+            <i class='bx bx-up-arrow-alt slideUp'></i></a>
+    </div>
+
+    <!-- header close -->
+
+    <div class="container-fluid">
+        <div class="container">
+            <!-- <h2>Select a Sheet</h2> -->
+            <select id="sheetDropdown" class="dropdown">
+                <option value="" class="dropdown1">Select Name...</option>
+            </select>
+
+            <div class="division">
+                <div id="billSection">
+                    <h3>Bill</h3>
+                    <table id="billTable" class="table table-hover">
+                        <thead>
+                            <tr id="billTable-header"></tr>
+                        </thead>
+                        <tbody id="billTable-body"></tbody>
+                        <tfoot id="billTable-foot"></tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="division">
+
+                <div id="meterSection">
+                    <h3>Meter</h3>
+                    <table id="meterTable" class="table table-hover">
+                        <thead>
+                            <tr id="meterTable-header"></tr>
+                        </thead>
+                        <tbody id="meterTable-body"></tbody>
+                        <tfoot id="meterTable-foot"></tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="division">
+
+                <div id="paidSection">
+                    <h3>Paid</h3>
+                    <table id="paidTable" class="table table-hover">
+                        <thead>
+                            <tr id="paidTable-header"></tr>
+                        </thead>
+                        <tbody id="paidTable-body"></tbody>
+                        <tfoot id="paidTable-foot"></tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="division">
+
+                <div id="recordSection">
+                    <h3>Record</h3>
+                    <table id="recordTable" class="table table-hover">
+                        <thead>
+                            <tr id="recordTable-header"></tr>
+                        </thead>
+                        <tbody id="recordTable-body"></tbody>
+                        <tfoot id="recordTable-foot"></tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const body = document.querySelector("body"),
+            header = document.querySelector("header"),
+            nav = document.querySelector("nav"),
+            modeToggle = document.querySelector(".dark-light"),
+            searchBox = document.querySelector(".searchBox"),
+            open = document.querySelector(".open"),
+            close = document.querySelector(".close"),
+            arrowTop = document.querySelector(".arrowTop");
+
+        // nav bar scroll up and down with windows
+
+        let prevScrollpos = window.pageYOffset;
+        window.addEventListener("scroll", () => {
+            let currentScrollpos = window.pageYOffset;
+            if (prevScrollpos < currentScrollpos) {
+                header.classList.add("hide");
+                arrowTop.classList.add("show");
+            } else {
+                header.classList.remove("hide");
+                arrowTop.classList.remove("show");
+            }
+            prevScrollpos = currentScrollpos;
+        })
+
+
+        // for always selector dark or light mode
+        let getMode = localStorage.getItem("mode");
+        if (getMode && getMode === "dark-mode") {
+            body.classList.add("dark");
+        }
+
+        //js code to toggle dark and light mode
+        modeToggle.addEventListener("click", () => {
+            modeToggle.classList.toggle("active");
+            body.classList.toggle("dark");
+
+            //    for always dark or light mode    
+
+            if (!body.classList.contains("dark")) {
+                localStorage.setItem("mode", "light-mode");
+            } else {
+                localStorage.setItem("mode", "dark-mode");
+            }
+
+        });
+
+        //toggle for nav bar
+        searchBox.addEventListener("click", () => {
+            searchBox.classList.toggle("active");
+            // nav.classList.add("active");
+        });
+
+
+        //for side bar
+
+        open.addEventListener("click", () => {
+            nav.classList.add("active");
+        })
+        body.addEventListener("click", e => {
+            let clickedElm = e.target;
+
+            if (!clickedElm.classList.contains("open") && !clickedElm.classList.contains("menu")) {
+                nav.classList.remove("active");
+                searchBox.classList.remove("active");
+            }
+        })
+
+
+
+        //header Close
+
+
+
+        async function fetchSheetNames() {
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwJ9Q54NmCsYt79TBRsWm8zSgFG11WDp0rSr9PQx6vsBe_4-PzUzvtZZUeuFUkXw5_QNQ/exec');
+                const data = await response.json();
+
+                const dropdown = document.getElementById('sheetDropdown');
+                dropdown.innerHTML = '<option value="">Select Name...</option>'; // Clear existing options
+
+                data.sheetNames.forEach(sheetName => {
+                    const option = document.createElement('option');
+                    option.value = sheetName;
+                    option.textContent = sheetName;
+                    dropdown.appendChild(option);
+                });
+
+                dropdown.addEventListener('change', () => fetchSheetData(dropdown.value));
+            } catch (error) {
+                console.error('Error fetching sheet names:', error);
+            }
+        }
+
+        async function fetchSheetData(sheetName) {
+            if (!sheetName) return;
+
+            try {
+                const response = await fetch(`https://script.google.com/macros/s/AKfycbwJ9Q54NmCsYt79TBRsWm8zSgFG11WDp0rSr9PQx6vsBe_4-PzUzvtZZUeuFUkXw5_QNQ/exec?sheetName=${sheetName}`);
+                const data = await response.json();
+
+                populateTable('billTable', data.bill);
+                populateTable('meterTable', data.meter);
+                populateTable('paidTable', data.paid);
+                populateTable('recordTable', data.record);
+            } catch (error) {
+                console.error('Error fetching sheet data:', error);
+            }
+        }
+
+        function populateTable(tableId, data) {
+            const tableHeader = document.getElementById(`${tableId}-header`);
+            const tableBody = document.getElementById(`${tableId}-body`);
+            const tableFoot = document.getElementById(`${tableId}-foot`);
+
+            // Clear existing content
+            tableHeader.innerHTML = '';
+            tableBody.innerHTML = '';
+            tableFoot.innerHTML = '';
+
+            if (data.length === 0) return;
+
+            // Populate the header
+            const headerRow = data[0];
+            headerRow.forEach(cell => {
+                const th = document.createElement('th');
+                th.textContent = cell;
+                tableHeader.appendChild(th);
+            });
+
+            // Populate the body
+            for (let i = 1; i < data.length; i++) {
+                const tr = document.createElement('tr');
+                data[i].forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            }
+           
+
+            // Optionally, populate the footer if needed (currently left empty)
+            // If you want to use it, you can append rows similar to the body
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchSheetNames);
+
+    </script>
+</body>
+
+</html>
